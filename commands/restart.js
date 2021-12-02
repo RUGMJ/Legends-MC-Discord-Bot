@@ -9,7 +9,9 @@ const api = new multicraftApiNode({
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('restart')
-		.setDescription('Restarts the mc server')
+		.setDescription(
+			'Restarts the mc server, this command only works for admins.'
+		)
 		.setDefaultPermission(false),
 	/**
 	 *

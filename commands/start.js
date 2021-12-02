@@ -9,7 +9,7 @@ const api = new multicraftApiNode({
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('start')
-		.setDescription('Starts the mc server')
+		.setDescription('Starts the mc server, this command only works for admins.')
 		.setDefaultPermission(false),
 	/**
 	 *
