@@ -28,7 +28,7 @@ module.exports = {
 				break;
 			case '1':
 				await interaction.reply(
-					`(1) Its only ${status.players[0].name} right now, Why dont you join them? :)`
+					`(1) Its only ${status.data.players[0].name} right now, Why dont you join them? :)`
 				);
 				break;
 			default:
