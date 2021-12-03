@@ -49,7 +49,7 @@ client.once('ready', async () => {
 		.put(
 			Routes.applicationGuildCommands(
 				client.application.id,
-				'876030717845463041'
+				process.env['guild']
 			),
 			{
 				body: commands,
@@ -60,7 +60,7 @@ client.once('ready', async () => {
 
 	(
 		await await (
-			await client.guilds.fetch('876030717845463041')
+			await client.guilds.fetch(process.env['guild'])
 		).commands.fetch()
 	)
 		.filter(cmd => !cmd.defaultPermission)
@@ -69,8 +69,8 @@ client.once('ready', async () => {
 
 			cmd.permissions.set({
 				permissions: [
-					{ type: 'ROLE', id: '888086016236322837', permission: true },
-					{ type: 'ROLE', id: '876032959755460658', permission: true },
+					{ type: 'ROLE', id: process.env['admin-role'], permission: true },
+					{ type: 'ROLE', id: process.env['owner-role'], permission: true },
 				],
 			});
 		});
