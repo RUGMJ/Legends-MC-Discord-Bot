@@ -35,7 +35,7 @@ module.exports = {
 			);
 
 		await interaction.reply(
-			`I\'ve sent the command \`${interaction.options.get(
+			`I\'ve sent the command \`${interaction.options.getString(
 				'command'
 			)}\` to the server`
 		);
