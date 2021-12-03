@@ -57,6 +57,23 @@ client.once('ready', async () => {
 		)
 		.then(() => console.log('Successfully registered application commands.'))
 		.catch(console.error);
+
+	(
+		await await (
+			await client.guilds.fetch('876030717845463041')
+		).commands.fetch()
+	)
+		.filter(cmd => !cmd.defaultPermission)
+		.forEach(cmd => {
+			console.log(`Set ${cmd.name}'s permissions to allow for admin use.'`);
+
+			cmd.permissions.set({
+				permissions: [
+					{ type: 'ROLE', id: '888086016236322837', permission: true },
+					{ type: 'ROLE', id: '876032959755460658', permission: true },
+				],
+			});
+		});
 });
 
 client.on('interactionCreate', async interaction => {
