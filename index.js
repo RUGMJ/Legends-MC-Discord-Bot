@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const { REST } = require('@discordjs/rest');
+const { REST, CDN } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -34,45 +34,49 @@ client.once('ready', async () => {
 
 	// Deploy Commands
 
-	const commands = [];
-	const commandFiles = fs
-		.readdirSync('./commands')
-		.filter(file => file.endsWith('.js'));
+	let commands = [];
 
-	for (const file of commandFiles) {
-		const command = require(`./commands/${file}`);
-		commands.push(command.data.toJSON());
-	}
+	fs.readdirSync(path.join(__dirname, 'commands')).forEach(cmdPath => {
+		commands.push(require(path.join(__dirname, 'commands', cmdPath)));
+	});
+
 	const rest = new REST({ version: '9' }).setToken(process.env.token);
 
-	rest
-		.put(
-			Routes.applicationGuildCommands(
-				client.application.id,
-				process.env['guild']
-			),
-			{
-				body: commands,
-			}
-		)
-		.then(() => console.log('Successfully registered application commands.'))
-		.catch(console.error);
+	await rest.put(
+		Routes.applicationGuildCommands(
+			client.application.id,
+			process.env['guild']
+		),
+		{
+			body: commands.map(cmd => cmd.data.toJSON()),
+		}
+	);
 
-	(
-		await await (
-			await client.guilds.fetch(process.env['guild'])
-		).commands.fetch()
-	)
-		.filter(cmd => !cmd.defaultPermission)
+	const applicationCommands = await (
+		await client.guilds.fetch(process.env['guild'])
+	).commands.fetch();
+	commands
+		.filter(cmd => !cmd.defaultPermsion)
 		.forEach(cmd => {
-			console.log(`Set ${cmd.name}'s permissions to allow for admin use.'`);
+			if (!cmd.allowedRoles) return;
+			const permissionDictionary = {
+				MOD: process.env['mod-role'],
+				OWNER: process.env['owner-role'],
+				ADMIN: process.env['admin-role'],
+			};
 
-			cmd.permissions.set({
-				permissions: [
-					{ type: 'ROLE', id: process.env['admin-role'], permission: true },
-					{ type: 'ROLE', id: process.env['owner-role'], permission: true },
-				],
+			let permissions = [];
+			cmd.allowedRoles.forEach(role => {
+				permissions.push({
+					type: 'ROLE',
+					id: permissionDictionary[role],
+					permission: true,
+				});
 			});
+
+			applicationCommands
+				.find(appCmd => appCmd.name === cmd.data.name)
+				.permissions.set({ permissions: permissions });
 		});
 });
 

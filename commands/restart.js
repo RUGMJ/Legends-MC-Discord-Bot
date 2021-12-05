@@ -28,4 +28,5 @@ module.exports = {
 			'The server *should* now be restarting, if the server is not up within the next 5 minutes either try again, or check the console for further details'
 		);
 	},
+	allowedRoles: ['ADMIN', 'OWNER'],
 };

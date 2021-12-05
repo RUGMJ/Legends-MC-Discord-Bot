@@ -26,4 +26,5 @@ module.exports = {
 			'The server *should* now be stopping, if the server is not down within the next 5 minutes either try again, or check the console for further details'
 		);
 	},
+	allowedRoles: ['ADMIN', 'OWNER'],
 };

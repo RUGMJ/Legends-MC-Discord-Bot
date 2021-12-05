@@ -7,7 +7,8 @@ module.exports = {
 		.setName('help')
 		.setDescription(
 			'Shows a list of commands that you can access and their description'
-		),
+		)
+		.setDefaultPermission(true),
 	/**
 	 *
 	 * @param {CommandInteraction} interaction

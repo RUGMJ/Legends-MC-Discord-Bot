@@ -40,4 +40,5 @@ module.exports = {
 			)}\` to the server`
 		);
 	},
+	allowedRoles: ['ADMIN', 'OWNER'],
 };
