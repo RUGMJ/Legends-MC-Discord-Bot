@@ -8,7 +8,7 @@ const api = new multicraftApiNode({
 });
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('runcommand')
+		.setName('rcmd')
 		.setDescription(
 			'Allows you to run a minecraft command from discord, only works for admins.'
 		)
