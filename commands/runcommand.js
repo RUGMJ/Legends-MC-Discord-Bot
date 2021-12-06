@@ -26,7 +26,7 @@ module.exports = {
 	async execute(interaction) {
 		// const result = await api.restartServer({ id: 213276 });
 		const result = await api.sendConsoleCommand({
-			server_id: 213276,
+			server_id: process.env['multicraft-server-id'],
 			command: interaction.options.getString('command'),
 		});
 		if (!result.success)

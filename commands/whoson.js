@@ -15,7 +15,10 @@ module.exports = {
 	 * @param {CommandInteraction} interaction
 	 */
 	async execute(interaction) {
-		const status = await api.getServerStatus({ id: 213276, player_list: 1 });
+		const status = await api.getServerStatus({
+			id: process.env['multicraft-server-id'],
+			player_list: 1,
+		});
 		if (!status.success)
 			return await interaction.reply(
 				'Sorry, an error occured with that request'
