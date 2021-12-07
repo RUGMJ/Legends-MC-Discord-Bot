@@ -8,6 +8,14 @@ const { Routes } = require('discord-api-types/v9');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
+const got = require('got').extend({
+	Headers: {
+		'User-Agent':
+			'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
+		Referer: 'https://panel.pebblehost.com',
+	},
+});
+require.cache[require.resolve('got')].exports = got;
 // Load commands from ./commands and add them to the commands collection
 (() => {
 	client.commands = new Collection();
