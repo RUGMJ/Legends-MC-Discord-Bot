@@ -24,17 +24,18 @@ module.exports = {
 	 * @param {CommandInteraction} interaction
 	 */
 	async execute(interaction) {
+		await interaction.deferReply();
 		// const result = await api.restartServer({ id: 213276 });
 		const result = await api.sendConsoleCommand({
 			server_id: process.env['multicraft-server-id'],
 			command: `kick ${interaction.options.getString('user')}`,
 		});
 		if (!result.success)
-			return await interaction.reply(
+			return await interaction.editReply(
 				'Sorry, an error occured with that request'
 			);
 
-		await interaction.reply(
+		await interaction.editReply(
 			`I've *attempted* to kick ${interaction.options.getString('user')}.`
 		);
 	},

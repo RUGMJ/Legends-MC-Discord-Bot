@@ -16,15 +16,16 @@ module.exports = {
 	 * @param {CommandInteraction} interaction
 	 */
 	async execute(interaction) {
+		await interaction.deferReply();
 		const result = await api.stopServer({
 			id: process.env['multicraft-server-id'],
 		});
 		if (!result.success)
-			return await interaction.reply(
+			return await interaction.editReply(
 				'Sorry, an error occured with that request'
 			);
 
-		await interaction.reply(
+		await interaction.editReply(
 			'The server *should* now be stopping, if the server is not down within the next 5 minutes either try again, or check the console for further details'
 		);
 	},

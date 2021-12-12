@@ -5,7 +5,7 @@ const api = new multicraftApiNode({
 	user: process.env['multicraft-email'],
 	key: process.env['multicraft-api-key'],
 });
-
+const { CommandInteraction } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('whoson')
@@ -15,22 +15,23 @@ module.exports = {
 	 * @param {CommandInteraction} interaction
 	 */
 	async execute(interaction) {
+		await interaction.deferReply();
 		const status = await api.getServerStatus({
 			id: process.env['multicraft-server-id'],
 			player_list: 1,
 		});
 		if (!status.success)
-			return await interaction.reply(
+			return await interaction.editReply(
 				'Sorry, an error occured with that request'
 			);
 		switch (status.data.onlinePlayers) {
 			case '0':
-				await interaction.reply(
+				await interaction.editReply(
 					`(0) No one is online right now :( Why dont you join? :)`
 				);
 				break;
 			case '1':
-				await interaction.reply(
+				await interaction.editReply(
 					`(1) Its only ${status.data.players[0].name} right now, Why dont you join them? :)`
 				);
 				break;
@@ -41,7 +42,7 @@ module.exports = {
 				});
 
 				const last = players.pop();
-				await interaction.reply(
+				await interaction.editReply(
 					`(${status.data.onlinePlayers}) Currently ${
 						players.join(', ') + ' and ' + last
 					} are online, Why dont you join them?`
