@@ -17,5 +17,6 @@ module.exports = {
 	 */
 	async execute(interaction) {
 		interaction.channel.send(interaction.options.getString('message', true));
+		interaction.editReply('Done');
 	},
 };
