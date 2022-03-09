@@ -19,4 +19,5 @@ module.exports = {
 		interaction.channel.send(interaction.options.getString('message', true));
 		interaction.reply({ ephemeral: true, content: 'Sent' });
 	},
+	allowedRoles: ['ADMIN', 'OWNER'],
 };
