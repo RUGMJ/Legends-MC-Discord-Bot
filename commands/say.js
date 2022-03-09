@@ -10,7 +10,8 @@ module.exports = {
 				.setName('message')
 				.setDescription('The message you want to send')
 				.setRequired(true)
-		),
+		)
+		.setDefaultPermission(false),
 	/**
 	 *
 	 * @param {CommandInteraction} interaction
