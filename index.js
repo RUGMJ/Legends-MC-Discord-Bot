@@ -38,7 +38,7 @@ client.once('ready', async () => {
 
 	// Set Status
 
-	client.user.setActivity('over Legends MC', { type: 'WATCHING' });
+	client.user.setActivity('over Limas', { type: 'WATCHING' });
 
 	// Deploy Commands
 
